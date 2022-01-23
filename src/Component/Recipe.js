@@ -6,7 +6,7 @@ class Recipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      meal: [],
+      meal: "",
     };
   }
   componentDidMount() {
@@ -25,15 +25,7 @@ class Recipe extends Component {
   }
   render() {
     var data = this.state.meal;
-    return (
-      <div>
-        {data.map((item, index) => {
-          console.log(item);
-          return <RecipeCard key={index} meal={item} />;
-        })}
-      </div>
-    );
-    // return <div className="App">{data.length > 0 && (data.map(item, index) <RecipeCard meal={data} />}</div>;
+    return <div className="App">{data.length > 0 && <RecipeCard meal={data} />}</div>;
   }
 }
 export default Recipe;
