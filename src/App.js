@@ -1,20 +1,39 @@
-import logo from "./logo.svg";
+import React, { Component } from "react";
+import Axios from "axios";
 import "./App.css";
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import RecipeCard from "./Component/RecipeCard";
+class Recipe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      meal: [],
+    };
+  }
+  componentDidMount() {
+    const URL = "https://61e96b407bc0550017bc628a.mockapi.io/kookinary/v1/kookinary";
+    Axios.get(URL)
+      .then((res) => {
+        const meal = res.data;
+        if (typeof meal === "object") {
+          this.setState({ meal });
+          console.log(res.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  render() {
+    var data = this.state.meal;
+    return (
+      <div>
+        {data.map((item, index) => {
+          console.log(item);
+          return <RecipeCard key={index} meal={item} />;
+        })}
+      </div>
+    );
+    // return <div className="App">{data.length > 0 && (data.map(item, index) <RecipeCard meal={data} />}</div>;
+  }
 }
-
-export default App;
+export default Recipe;
